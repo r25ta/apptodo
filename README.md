@@ -1,5 +1,5 @@
 # apptodo
-App TO-DO learn Golang
+App TO-DO learn Golang basic CRUD
 
 Here I learned basics concepts in
 
