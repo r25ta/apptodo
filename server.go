@@ -6,6 +6,9 @@ import (
 	"log"
 	"os"
 
+	//IMPORT LOCAL MODULE
+	model "apptodo/model"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
 	_ "github.com/lib/pq"
@@ -52,13 +55,8 @@ func main() {
 
 }
 
-type Todo struct {
-	Id   int64
-	Item string
-}
-
 func indexHandler(c *fiber.Ctx, db *sql.DB) error {
-	todos := make([]*Todo, 0)
+	todos := make([]*model.Todo, 0)
 
 	rows, err := db.Query("SELECT id, item FROM todo")
 	defer rows.Close()
@@ -69,9 +67,11 @@ func indexHandler(c *fiber.Ctx, db *sql.DB) error {
 	}
 
 	for rows.Next() {
-		todo := new(Todo)
+		todo := new(model.Todo)
 
 		rows.Scan(&todo.Id, &todo.Item)
+
+		fmt.Println(model.Todo.PrintInfo(*todo))
 
 		todos = append(todos, todo)
 	}
